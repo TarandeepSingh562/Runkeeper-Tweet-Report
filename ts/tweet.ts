@@ -9,13 +9,28 @@ class Tweet {
 
 	//returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
     get source():string {
+        if (this.text.includes('completed') || this.text.includes("posted")){
+            return "completed_event"
+        }
+        else if(this.text.startsWith('Achieved') || this.text.includes("set a goal")){
+            return "achievement"
+        }
+        else if (this.text.includes("right now")){
+            return "live_event"
+        }
+        else{
+            return "miscellaneous"
+        }
+
         //TODO: identify whether the source is a live event, an achievement, a completed event, or miscellaneous.
-        return "unknown";
     }
 
     //returns a boolean, whether the text includes any content written by the person tweeting.
     get written():boolean {
         //TODO: identify whether the tweet is written
+        if(this.text.includes('-') && !this.text.includes('TomTom')){
+            return true;
+        }
         return false;
     }
 
@@ -24,13 +39,16 @@ class Tweet {
             return "";
         }
         //TODO: parse the written text from the tweet
-        return "";
+        const startIndex = this.text.indexOf('- ')
+        const endIndex = this.text.indexOf('http')
+        return this.text.substring(startIndex + 1, endIndex)
     }
 
     get activityType():string {
         if (this.source != 'completed_event') {
             return "unknown";
         }
+        
         //TODO: parse the activity type from the text of the tweet
         return "";
     }
