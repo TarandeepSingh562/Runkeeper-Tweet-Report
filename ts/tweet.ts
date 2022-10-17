@@ -9,17 +9,17 @@ class Tweet {
 
 	//returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
     get source():string {
-        if (this.text.includes('completed') || this.text.includes("posted")){
-            return "completed_event"
+        if (this.text.includes("completed") || this.text.includes("posted")){
+            return "completed_event";
         }
         else if(this.text.startsWith('Achieved') || this.text.includes("set a goal")){
-            return "achievement"
+            return "achievement";
         }
         else if (this.text.includes("right now")){
-            return "live_event"
+            return "live_event";
         }
         else{
-            return "miscellaneous"
+            return "miscellaneous";
         }
 
         //TODO: identify whether the source is a live event, an achievement, a completed event, or miscellaneous.
@@ -39,9 +39,9 @@ class Tweet {
             return "";
         }
         //TODO: parse the written text from the tweet
-        const startIndex = this.text.indexOf('- ')
-        const endIndex = this.text.indexOf('http')
-        return this.text.substring(startIndex + 1, endIndex)
+        const startIndex = this.text.indexOf('- ');
+        const endIndex = this.text.indexOf('http');
+        return this.text.substring(startIndex + 1, endIndex);
     }
 
     get activityType():string {
