@@ -35,15 +35,15 @@ function parseTweets(runkeeper_tweets) {
 			achievements += 1;
 		}
 		else if (tweet_array[i].source == "miscellaneous" ){
-			miscellaneous += 1
+			miscellaneous += 1;
 		}
 	}
-	
+
 	var total = (completedEvents + liveEvents + achievements + miscellaneous);
 	var completedEventsPct = 0;
 	var liveEventsPct = 0; 
 	var achievementsPct = 0;
-	var miscellaneous = 0;
+	var miscellaneousPct = 0;
 
 	completedEventsPct = ((completedEvents/total) * 100).toFixed(2) + "%";
 	liveEventsPct = ((liveEvents/total) * 100).toFixed(2) + "%";
