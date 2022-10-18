@@ -1,3 +1,4 @@
+
 class Tweet {
 	private text:string;
 	time:Date;
@@ -47,6 +48,30 @@ class Tweet {
     get activityType():string {
         if (this.source != 'completed_event') {
             return "unknown";
+        }
+        if (this.text.includes('ski run')){
+            return "skiing"
+        }
+        else if (this.text.includes('mi run') || this.text.includes('km run')){
+            return "running"
+        }
+        else if (this.text.includes('hike')){
+            return "hiking"
+        }
+        else if (this.text.includes('skate')){
+            return "skating"
+        }
+        else if (this.text.includes('swim')){
+            return "swimming"
+        }
+        else if (this.text.includes('walk')){
+            return 'walking'
+        }
+        else if (this.text.includes('bike')){
+            return 'biking'
+        }
+        else if (this.text.includes('elliptical workout')){
+            return "elliptical workout"
         }
         
         //TODO: parse the activity type from the text of the tweet
