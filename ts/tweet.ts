@@ -79,11 +79,28 @@ class Tweet {
     }
 
     get distance():number {
+        var distance = 0;
         if(this.source != 'completed_event') {
             return 0;
         }
+        else{
+            if (this.text.includes(" mi ")){
+                const index1 = this.text.indexOf(" mi ");
+                const index2 = this.text.indexOf(" a ")
+                const result = this.text.substring(index1, index2 + 3);
+                const result_trim = result.trim();
+                distance = parseFloat(result_trim)
+            }
+            else if (this.text.includes(" km ")){
+                const index1 = this.text.indexOf(" km ");
+                const index2 = this.text.indexOf(" a ")
+                const result = this.text.substring(index1, index2 + 3);
+                const result_trim = result.trim();
+                distance = parseFloat(result_trim)/1.609
+            }
+        }
         //TODO: prase the distance from the text of the tweet
-        return 0;
+        return distance;
     }
 
     getHTMLTableRow(rowNumber:number):string {

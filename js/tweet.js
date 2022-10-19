@@ -41,41 +41,59 @@ class Tweet {
         if (this.source != 'completed_event') {
             return "unknown";
         }
-        else { 
-            if (this.text.includes('ski run')) {
-                return "skiing";
-            }
-            else if (this.text.includes('mi run') || this.text.includes('km run')) {
-                return "running";
-            }
-            else if (this.text.includes('hike')) {
-                return "hiking";
-            }
-            else if (this.text.includes('skate')) {
-                return "skating";
-            }
-            else if (this.text.includes('swim')) {
-                return "swimming";
-            }
-            else if (this.text.includes('walk')) {
-                return 'walking';
-            }
-            else if (this.text.includes('bike')) {
-                return 'biking';
-            }
-            else if (this.text.includes('elliptical workout')) {
-                return "elliptical workout";
-            }
+        if (this.text.includes('ski run')) {
+            return "skiing";
+        }
+        else if (this.text.includes('mi run') || this.text.includes('km run')) {
+            return "running";
+        }
+        else if (this.text.includes('hike')) {
+            return "hiking";
+        }
+        else if (this.text.includes('skate')) {
+            return "skating";
+        }
+        else if (this.text.includes('swim')) {
+            return "swimming";
+        }
+        else if (this.text.includes('walk')) {
+            return 'walking';
+        }
+        else if (this.text.includes('bike')) {
+            return 'biking';
+        }
+        else if (this.text.includes('elliptical workout')) {
+            return "elliptical workout";
+        }
+        else if (this.text.includes('yoga')){
+            return "yoga"
         }
         //TODO: parse the activity type from the text of the tweet
-        return "unknown";
+        return "";
     }
     get distance() {
+        var distance = 0;
         if (this.source != 'completed_event') {
             return 0;
         }
+        else {
+            if (this.text.includes(" mi ")) {
+                const index1 = this.text.indexOf(" mi ");
+                const index2 = this.text.indexOf(" a ");
+                const result = this.text.substring(index1, index2 + 3);
+                const result_trim = result.trim();
+                distance = parseFloat(result_trim);
+            }
+            else if (this.text.includes(" km ")) {
+                const index1 = this.text.indexOf(" km ");
+                const index2 = this.text.indexOf(" a ");
+                const result = this.text.substring(index1, index2 + 3);
+                const result_trim = result.trim();
+                distance = parseFloat(result_trim) / 1.609;
+            }
+        }
         //TODO: prase the distance from the text of the tweet
-        return 0;
+        return distance;
     }
     getHTMLTableRow(rowNumber) {
         //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
