@@ -65,11 +65,17 @@ class Tweet {
         else if (this.text.includes('elliptical workout')) {
             return "elliptical workout";
         }
-        else if (this.text.includes('yoga')){
-            return "yoga"
+        else if (this.text.includes('yoga')) {
+            return "yoga";
+        }
+        else if (this.text.includes('chair ride')) {
+            return "chair riding";
+        }
+        else if (this.text.toLowerCase().includes('Freestyle')) {
+            return "freestyling";
         }
         //TODO: parse the activity type from the text of the tweet
-        return "";
+        return "unknown";
     }
     get distance() {
         var distance = 0;

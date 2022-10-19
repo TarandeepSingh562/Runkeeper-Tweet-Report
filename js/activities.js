@@ -12,7 +12,8 @@ function parseTweets(runkeeper_tweets) {
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
 	let activityCounter = [{act: 'running', counter: 0}, {act: 'skiiing', counter: 0},{act: 'hiking', counter: 0},
 					   {act: 'skating', counter: 0}, {act: 'swimming', counter: 0}, {act: 'walking', counter: 0},
-					   {act: 'biking', counter: 0}, {act: 'elliptical workout', counter: 0}, {act: 'yoga', counter: 0}];
+					   {act: 'biking', counter: 0}, {act: 'elliptical workout', counter: 0}, {act: 'yoga', counter: 0}, 
+					   {act: 'chair ride', counter: 0}, {act: 'freestyling', counter: 0}];
 
 	for(let i = 0; i < tweet_array.length; i++){
 		if (tweet_array[i].activityType == 'running'){
@@ -42,15 +43,21 @@ function parseTweets(runkeeper_tweets) {
 		else if (tweet_array[i].activityType == 'yoga'){
 			activityCounter[8].counter++;
 		}
+		else if (tweet_array[i].activityType == 'chair riding'){
+			activityCounter[9].counter++;
+		}
+		else if (tweet_array[i].activityType == 'freestyling'){
+			activityCounter[10].counter++;
+		}
 	}
 
-	let sorted_array = activityCounter.sort((a, b) => a.counter - b.counter)
+	let sorted_array = activityCounter.sort((a, b) => b.counter - a.counter)
 
 
 	document.getElementById('numberActivities').textContent = Object.keys(activityCounter).length;
-	document.getElementById('firstMost').textContent = sorted_array[8].act;
-	document.getElementById('secondMost').textContent = sorted_array[7].act;
-	document.getElementById('thirdMost').textContent = activityCounter[6].act;
+	document.getElementById('firstMost').textContent = sorted_array[0].act;
+	document.getElementById('secondMost').textContent = sorted_array[1].act;
+	document.getElementById('thirdMost').textContent = activityCounter[2].act;
 
 
 
@@ -58,11 +65,25 @@ function parseTweets(runkeeper_tweets) {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "A graph of the number of Tweets containing each type of activity.",
 	  "data": {
-	    "values": tweet_array
-	  }
-	  //TODO: Add mark and encoding
-	};
+		values: tweet_array.map(tweet => (
+			{
+			'Activity': tweet.activityType
+		}))
+	  },
+	  "mark": "bar",
+	  "encoding":{
+		"y": {
+			"aggregate": "count",
+			"type": "quantitative",
+		},
+		"x":{
+			"field":"Activity",
+			"sort": {"encoding": "y"},
+		},
+	}
+}
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
+
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
