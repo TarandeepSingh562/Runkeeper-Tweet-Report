@@ -56,13 +56,15 @@ function parseTweets(runkeeper_tweets) {
 
 	let sorted_array = activityCounter.sort((a, b) => b.counter - a.counter);
 
+	var firstMost = sorted_array[0].act;
+	var secondMost = sorted_array[1].act;
+	var thirdMost = sorted_array[2].act;
+
 
 	$('#numberActivities').text(Object.keys(activityCounter).length);
-	$("#firstMost").text(sorted_array[0].act);
-	$("#secondMost").text(sorted_array[1].act);
-	$("#thirdMost").text(sorted_array[2].act);
-
-
+	$("#firstMost").text(firstMost);
+	$("#secondMost").text(secondMost);
+	$("#thirdMost").text(thirdMost);
 
 
 	activity_vis_spec = {
@@ -76,13 +78,13 @@ function parseTweets(runkeeper_tweets) {
 	  },
 	  "mark": "bar",
 	  "encoding":{
-		"y": {
-			"aggregate": "count",
-			"type": "quantitative",
-		},
 		"x":{
 			"field":"Activity",
 			"sort": {"encoding": "y"},
+		},
+		"y": {
+			"aggregate": "count",
+			"type": "quantitative",
 		},
 	}
 }
@@ -91,7 +93,89 @@ function parseTweets(runkeeper_tweets) {
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
+	activity_dist_vis ={
+		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+		"description": "A graph of the distances by day of the week for all of the three most tweeted-about activities",
+		width: "200",
+		"data": {
+		  values: tweet_array.filter(tweet => (
+			  tweet.activityType === firstMost || 
+			  tweet.activityType === secondMost ||
+			  tweet.activityType === thirdMost
+			  )).map(tweet => (
+			  {
+				'Date': tweet.time,
+			  	'Distance': tweet.distance,
+			  	'Activity': tweet.activityType
+		  }))
+		},
+		"mark": "point",
+		"encoding":{
+			"x":{
+				"sort": ["Sun ","Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "],
+			  	"field": "Date",
+			 	"axis":{"title": "time(day)"},
+			  	"timeUnit": "day",
+			},
+			"y":{
+				"field":"Distance",
+				"type": "quantitative",
+			},
+			"color": {"field": "Activity"},
+		}
+	  }
+			
+
+	activity_aggregate_vis = {
+		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+				"description": "A graph of the distances by day of the week for all of the three most tweeted-about activities, aggregating the activities by the mean.",
+		width: "200",
+		"data": {
+			values: tweet_array.filter(tweet => (
+				tweet.activityType === firstMost || 
+				tweet.activityType === secondMost ||
+				tweet.activityType === thirdMost
+			)).map(tweet => (
+				{
+				'Distance': tweet.distance,
+				'Date': tweet.time,
+				'Activity': tweet.activityType
+			}))
+		},
+		"mark": "point",
+		"encoding":{
+			"x":{
+				"sort": ["Sun ","Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "],
+				"field": "Date",
+				"axis":{"title": "time(day)"},
+				"timeUnit": "day",
+			},
+			"y":{
+				"field":"Distance",
+				"aggregate": "mean",
+				"type": "quantitative",
+		},
+		"color": {"field": "Activity"},
+		}
+	}
+	let boolean_flag = true;
+	$('#aggregate').on('click', function(){
+		if (!boolean_flag){
+			$(this).text("Show mean");
+			vegaEmbed('#distanceVis', activity_dist_vis, {actions:false});
+			$('#distanceVisAggregated').text("");	
+		}
+		else{
+			$(this).text("Show all activities");
+			
+			vegaEmbed('#distanceVisAggregated', activity_aggregate_vis, {actions:false});
+			$('#distanceVis').text("");
+		}
+		boolean_flag = !boolean_flag;
+	})
+	vegaEmbed('#distanceVis', activity_dist_vis, {actions:false});
 }
+
 
 //Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function (event) {
