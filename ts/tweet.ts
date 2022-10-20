@@ -79,8 +79,11 @@ class Tweet {
         else if (this.text.includes('chair ride')){
             return "chair riding";
         }
-        else if (this.text.toLowerCase().includes('Freestyle')){
+        else if (this.text.includes('Freestyle')){
             return "freestyling";
+        }
+        else if (this.text.includes('row')) {
+            return "rowing";
         }
         
         //TODO: parse the activity type from the text of the tweet

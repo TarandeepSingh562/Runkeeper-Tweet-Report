@@ -13,7 +13,7 @@ function parseTweets(runkeeper_tweets) {
 	let activityCounter = [{act: 'running', counter: 0}, {act: 'skiiing', counter: 0},{act: 'hiking', counter: 0},
 					   {act: 'skating', counter: 0}, {act: 'swimming', counter: 0}, {act: 'walking', counter: 0},
 					   {act: 'biking', counter: 0}, {act: 'elliptical workout', counter: 0}, {act: 'yoga', counter: 0}, 
-					   {act: 'chair ride', counter: 0}, {act: 'freestyling', counter: 0}];
+					   {act: 'chair ride', counter: 0}, {act: 'freestyling', counter: 0}, {act: 'rowing', counter: 0}];
 
 	for(let i = 0; i < tweet_array.length; i++){
 		if (tweet_array[i].activityType == 'running'){
@@ -49,15 +49,19 @@ function parseTweets(runkeeper_tweets) {
 		else if (tweet_array[i].activityType == 'freestyling'){
 			activityCounter[10].counter++;
 		}
+		else if (tweet_array[i].activityType == 'rowing'){
+			activityCounter[11].counter++;
+		}
 	}
 
-	let sorted_array = activityCounter.sort((a, b) => b.counter - a.counter)
+	let sorted_array = activityCounter.sort((a, b) => b.counter - a.counter);
 
 
-	document.getElementById('numberActivities').textContent = Object.keys(activityCounter).length;
-	document.getElementById('firstMost').textContent = sorted_array[0].act;
-	document.getElementById('secondMost').textContent = sorted_array[1].act;
-	document.getElementById('thirdMost').textContent = activityCounter[2].act;
+	$('#numberActivities').text(Object.keys(activityCounter).length);
+	$("#firstMost").text(sorted_array[0].act);
+	$("#secondMost").text(sorted_array[1].act);
+	$("#thirdMost").text(sorted_array[2].act);
+
 
 
 
