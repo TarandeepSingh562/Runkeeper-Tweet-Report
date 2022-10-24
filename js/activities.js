@@ -13,7 +13,9 @@ function parseTweets(runkeeper_tweets) {
 	let activityCounter = [{act: 'running', counter: 0}, {act: 'skiiing', counter: 0},{act: 'hiking', counter: 0},
 					   {act: 'skating', counter: 0}, {act: 'swimming', counter: 0}, {act: 'walking', counter: 0},
 					   {act: 'biking', counter: 0}, {act: 'elliptical workout', counter: 0}, {act: 'yoga', counter: 0}, 
-					   {act: 'chair ride', counter: 0}, {act: 'freestyling', counter: 0}, {act: 'rowing', counter: 0}];
+					   {act: 'chair ride', counter: 0}, {act: 'freestyling', counter: 0}, {act: 'rowing', counter: 0}, 
+					   {act: 'circuit workout', counter: 0}, {act: 'mtn bike', counter: 0}, {act: 'mysports freestyle'},
+					   {act: 'nordic walk', counter: 0}];
 
 	for(let i = 0; i < tweet_array.length; i++){
 		if (tweet_array[i].activityType == 'running'){
@@ -52,8 +54,20 @@ function parseTweets(runkeeper_tweets) {
 		else if (tweet_array[i].activityType == 'rowing'){
 			activityCounter[11].counter++;
 		}
+		else if (tweet_array[i].activityType == 'circuit workout'){
+			activityCounter[12].counter++;
+		}
+		else if (tweet_array[i].activityType == 'mtn bike'){
+			activityCounter[13].counter++;
+		}
+		else if (tweet_array[i].activityType == 'mysports freestyle'){
+			activityCounter[14].counter++;
+		}
+		else if (tweet_array[i].activityType == 'nordic walk'){
+			activityCounter[15].counter++;
+		}
 	}
-
+	// Found this solution on w3schools.com
 	let sorted_array = activityCounter.sort((a, b) => b.counter - a.counter);
 
 	var firstMost = sorted_array[0].act;

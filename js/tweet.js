@@ -77,6 +77,18 @@ class Tweet {
         else if (this.text.includes('row')) {
             return "rowing";
         }
+        else if (this.text.includes('circuit workout')) {
+            return "circuit workout";
+        }
+        else if (this.text.includes('mtn bike')) {
+            return "mtn bike";
+        }
+        else if (this.text.includes('MySports Freestyle')) {
+            return "mysports freestyle";
+        }
+        else if (this.text.includes('nordic walk')) {
+            return "nordic walk";
+        }
         //TODO: parse the activity type from the text of the tweet
         return "unknown";
     }
@@ -106,6 +118,13 @@ class Tweet {
     }
     getHTMLTableRow(rowNumber) {
         //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
-        return "<tr></tr>";
+        var tweet = this.text.split(" ");
+        for (let i = 0; i < tweet.length; i++) {
+            if (tweet[i].includes('#Runkeeper') || tweet[i].includes('https:')) {
+                tweet[i] = "<" + "a" + "href" + "=" + tweet[i] + ">" + tweet[i] + "<" + "/" + "a" + ">";
+            }
+        }
+        var theTweets = tweet.join(" ");
+        return "<tr><td>" + rowNumber + "</td><td>" + this.activityType + "</td><td>" + theTweets + "</td></tr>";
     }
 }
