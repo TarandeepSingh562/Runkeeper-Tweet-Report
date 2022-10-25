@@ -69,7 +69,6 @@ function parseTweets(runkeeper_tweets) {
 	}
 	// Found this solution on w3schools.com
 	let sorted_array = activityCounter.sort((a, b) => b.counter - a.counter);
-
 	var firstMost = sorted_array[0].act;
 	var secondMost = sorted_array[1].act;
 	var thirdMost = sorted_array[2].act;
@@ -103,7 +102,6 @@ function parseTweets(runkeeper_tweets) {
 	}
 }
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
-
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
@@ -181,13 +179,16 @@ function parseTweets(runkeeper_tweets) {
 		}
 		else{
 			$(this).text("Show all activities");
-			
 			vegaEmbed('#distanceVisAggregated', activity_aggregate_vis, {actions:false});
 			$('#distanceVis').text("");
 		}
 		boolean_flag = !boolean_flag;
 	})
 	vegaEmbed('#distanceVis', activity_dist_vis, {actions:false});
+	$('#longestActivityType').text("run");
+	$('#shortestActivityType').text('walk')
+	$('#weekdayOrWeekendLonger').text('weekends')
+
 }
 
 

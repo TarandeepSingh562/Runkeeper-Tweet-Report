@@ -10,7 +10,6 @@ function parseTweets(runkeeper_tweets) {
 	});
 }
 
-
 function addEventHandlerForSearch() {
 	//TODO: Search the written tweets as text is entered into the search box, and add them to the table
 	$('#textFilter').keyup(event => {
